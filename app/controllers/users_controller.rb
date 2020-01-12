@@ -13,10 +13,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def home
+    set_user
+    render 'index'
+  end
+
   private 
 
   def set_user
-    User.find_by(id: session[:user_id])
+    @user = User.find_by(id: session[:user_id])
   end
 
   def user_params

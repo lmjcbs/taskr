@@ -26,7 +26,7 @@ class ProjectsController < ApplicationController
 
   def update
     @project = set_project
-    if @project.update(project_params)
+    if @project.update_attributes(project_params)
       flash[:success] = "Project successfully updated"
       redirect_to project_path(@project)
     else
@@ -37,8 +37,13 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project = set_project
-    @project.destroy
-    redirect_to home_path
+    if @project.destroy
+      flash[:success] = 'Object was successfully deleted.'
+      redirect_to home_path
+    else
+      flash[:error] = 'Something went wrong'
+      redirect_to home_path
+    end
   end
   
   private

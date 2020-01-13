@@ -2,10 +2,10 @@ class Project < ApplicationRecord
   has_many :user_projects
   has_many :users, through: :user_projects
   has_many :tasks
+  has_many :categories, through: :tasks
   has_many :comments, through: :tasks
 
   before_save :set_project_manager
-
 
   private
 

@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   post '/logout', to: 'sessions#destroy'
 
-  resources :projects, only: %i[new create edit update destroy] 
+  resources :projects, only: %i[new create show edit update destroy] 
 
-  resources :tasks, only: %i[new create edit update destroy]
+  resources :tasks, only: %i[new create show edit update destroy]
 
-  resources :comments, only: %i[new create edit update destroy]
+  resources :comments, only: %i[new create show edit update destroy]
 end

@@ -8,4 +8,10 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new', as: 'login'
   post '/login', to: 'sessions#create'
   post '/logout', to: 'sessions#destroy'
+
+  resources :projects, only: %i[new create edit update destroy] 
+
+  resources :tasks, only: %i[new create edit update destroy]
+
+  resources :comments, only: %i[new create edit update destroy]
 end

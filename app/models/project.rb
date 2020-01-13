@@ -5,6 +5,7 @@ class Project < ApplicationRecord
   has_many :comments, through: :tasks
 
   before_save :set_project_manager
+  before_action :logged_in?
 
   private
 

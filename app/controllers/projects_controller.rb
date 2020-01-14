@@ -1,8 +1,13 @@
 class ProjectsController < ApplicationController
-  before_action :logged_in?
+  include ProjectHelper
+
+  before_action :set_user
+  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :project_member?, only: [:show]
+  before_action :project_manager?, only: [:edit, :update, :destroy]
 
   def index
-    @projects = current_user.projects
+    @projects = @user.projects
   end
   
   def new
@@ -11,6 +16,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
+    set_project_manager(@user, @project)
     if @project.save
       flash[:success] = "Project successfully created"
       redirect_to @project
@@ -21,28 +27,13 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = set_project
-    if current_user.is_project_member?(@project)
-      render 'show'
-    else
-      flash[:error] = "You do not have the permissions to view that"
-      redirect_to home_path
-    end
   end
 
   def edit
-    @project = set_project
-    if is_project_manager?(@project)
-      render 'edit'
-    else
-      flash[:error] = "You do not have the permissions to do that"
-      redirect_to @project
-    end
   end
 
   def update
-    @project = set_project
-    if is_project_manager?(@project) && @project.update_attributes(project_params)
+    if @project.update_attributes(project_params)
       flash[:success] = "Project successfully updated"
       redirect_to @project
     else
@@ -52,8 +43,7 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project = set_project
-    if is_project_manager?(@project) && @project.destroy
+    if @project.destroy
       flash[:success] = "Project was successfully deleted."
       redirect_to home_path
     else
@@ -65,10 +55,24 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :category, :project_manager)
+    params.require(:project).permit(:title, :category)
   end
   
   def set_project
-    Project.find_by(id: params[:id])
+    @project = Project.find_by(id: params[:id])
+  end
+
+  def project_member?
+    unless @project.users.include?(@user)
+      flash[:error] = "You do not have the permissions to view that"
+      redirect_to home_path
+    end
+  end
+
+  def project_manager?
+    unless @project.project_manager_id == @user.id
+      flash[:error] = "You do not have the permissions to do that"
+      redirect_to @project
+    end
   end
 end

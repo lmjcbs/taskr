@@ -1,0 +1,19 @@
+<%= form_for([project, task]) do |f| %>
+
+  <%= f.label :title %>
+  <%= f.text_field :title %><br>
+
+  <%= f.label :description %>
+  <%= f.text_area :description %><br>
+
+  <%= f.label :due_date %>
+  <%= f.date_field :due_date %><br>
+
+  <%= f.label :assigned_to %>
+  <%= f.select(:assigned_to, options_from_collection_for_select(project.users, 'id', 'username')) %><br>
+
+  <%= f.label :category_id %>
+  <%= f.select(:category_id, options_from_collection_for_select(Category.all, 'id', 'name')) %><br>
+
+  <%= f.submit %>
+<% end %>

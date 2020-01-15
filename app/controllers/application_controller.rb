@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
 
   def set_user
     redirect_to login_path unless logged_in?
-    @user ||= User.find_by(id: session[:user])
+    @user ||= User.find(session[:user])
   end
 end

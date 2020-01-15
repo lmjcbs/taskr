@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root 'users#home', as: 'home'
 
   resources :projects do
-    resources :tasks, except: :index
+    resources :tasks do
+      resources :comments, only: [:create, :destroy]
+    end
   end
 
   get '/signup', to: 'users#new', as: 'signup'

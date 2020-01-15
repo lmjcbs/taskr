@@ -17,10 +17,10 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.add_project_manager(@user)
     if @project.save
-      flash[:success] = "Project successfully created"
+      flash[:notice] = "Project successfully created"
       redirect_to @project
     else
-      flash[:error] = "Something went wrong"
+      flash[:alert] = "Something went wrong"
       render 'new'
     end
   end
@@ -33,20 +33,20 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update(project_params)
-      flash[:success] = "Project successfully updated"
+      flash[:notice] = "Project successfully updated"
       redirect_to @project
     else
-      flash[:error] = "Something went wrong"
+      flash[:alert] = "Something went wrong"
       render 'edit'
     end
   end
 
   def destroy
     if @project.destroy
-      flash[:success] = "Project was successfully deleted."
+      flash[:notice] = "Project was successfully deleted."
       redirect_to home_path
     else
-      flash[:error] = "Something went wrong"
+      flash[:alert] = "Something went wrong"
       redirect_to @project
     end
   end
@@ -67,14 +67,14 @@ class ProjectsController < ApplicationController
 
   def project_member?
     unless @project.users.include?(@user)
-      flash[:error] = "You do not have the permissions to view that"
+      flash[:alert] = "You do not have the permissions to view that"
       redirect_to home_path
     end
   end
 
   def project_manager?
     unless @project.project_manager == @user
-      flash[:error] = "You do not have the permissions to do that"
+      flash[:alert] = "You do not have the permissions to do that"
       redirect_to @project
     end
   end

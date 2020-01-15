@@ -1,6 +1,4 @@
 class ProjectsController < ApplicationController
-  include ProjectHelper
-
   before_action :set_user
   before_action :set_project, only: [:show, :edit, :update, :destroy]
   before_action :set_project_tasks, only: :show
@@ -17,7 +15,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
-    add_project_manager
+    @project.add_project_manager(@user)
     if @project.save
       flash[:success] = "Project successfully created"
       redirect_to @project
@@ -65,11 +63,6 @@ class ProjectsController < ApplicationController
 
   def set_project_tasks
     @tasks = @project.tasks
-  end
-
-  def add_project_manager
-    @project.project_manager_id = @user.id
-    @user.projects << @project
   end
 
   def project_member?

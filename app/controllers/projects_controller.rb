@@ -55,11 +55,11 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :category)
+    params.require(:project).permit(:title)
   end
   
   def set_project
-    @project = Project.find_by(id: params[:id])
+    @project = Project.find(params[:id])
   end
 
   def project_member?
@@ -70,7 +70,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_manager?
-    unless @project.project_manager_id == @user.id
+    unless @project.project_manager == @user
       flash[:error] = "You do not have the permissions to do that"
       redirect_to @project
     end

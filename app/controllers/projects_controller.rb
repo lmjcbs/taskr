@@ -3,11 +3,12 @@ class ProjectsController < ApplicationController
 
   before_action :set_user
   before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project_tasks, only: :show
   before_action :project_member?, only: [:show]
   before_action :project_manager?, only: [:edit, :update, :destroy]
 
   def index
-    @projects = @user.projects
+    @projects = @user.projects   
   end
   
   def new
@@ -16,7 +17,7 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
-    set_project_manager(@user, @project)
+    add_project_manager
     if @project.save
       flash[:success] = "Project successfully created"
       redirect_to @project
@@ -33,7 +34,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    if @project.update_attributes(project_params)
+    if @project.update(project_params)
       flash[:success] = "Project successfully updated"
       redirect_to @project
     else
@@ -60,6 +61,15 @@ class ProjectsController < ApplicationController
   
   def set_project
     @project = Project.find(params[:id])
+  end
+
+  def set_project_tasks
+    @tasks = @project.tasks
+  end
+
+  def add_project_manager
+    @project.project_manager_id = @user.id
+    @user.projects << @project
   end
 
   def project_member?

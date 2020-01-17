@@ -8,5 +8,4 @@ class User < ApplicationRecord
   has_many :tasks, through: :projects
   has_many :comments, through: :tasks
 
-  has_secure_password
 end

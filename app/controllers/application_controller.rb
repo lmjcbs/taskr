@@ -1,13 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :set_user
 
-  def logged_in?
-    session[:user]
-  end
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
-  def set_user
-    redirect_to login_path unless logged_in?
-    @user ||= User.find(session[:user])
+  private
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up,
+      keys: [:username, :email, :password, :password_confirmation])
+    devise_parameter_sanitizer.permit(:sign_in,
+      keys: [:email, :password, :password_confirmation])
   end
 end

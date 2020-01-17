@@ -89,6 +89,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dotenv (2.2.2)
     erubi (1.9.0)
     faraday (1.0.0)
       multipart-post (>= 1.2, < 3)
@@ -249,6 +250,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   devise
+  dotenv (~> 2.2.1)
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
   omniauth-github

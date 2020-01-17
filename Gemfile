@@ -46,6 +46,8 @@ group :development do
   # Better errors
   gem "better_errors"
   gem "binding_of_caller"
+  # Use Dotenv for environment variables
+  gem 'dotenv', '~> 2.2.1'
 end
 
 group :test do

@@ -1,0 +1,5 @@
+<div id="single-comment">
+  <p><%= @user.username %>    |   <%= comment.content %>
+  <br>
+  <%= link_to "delete comment", project_task_comment_path(@project, @task, comment), method: :delete %> </p>
+</div>

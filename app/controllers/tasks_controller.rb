@@ -1,5 +1,4 @@
 class TasksController < ApplicationController
-  before_action :set_user
   before_action :set_project
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :user_created_task?, only: [:edit, :update, :destroy]
@@ -14,7 +13,7 @@ class TasksController < ApplicationController
 
   def create
     @task = @project.tasks.build(task_params)
-    @task.user = @user
+    @task.user = current_user
     if @task.save
       flash[:notice] =  "Task successfully created"
       redirect_to project_task_path(@project, @task)
@@ -65,7 +64,7 @@ class TasksController < ApplicationController
   end
   
   def user_created_task?
-    unless @task.user == @user
+    unless @task.user == current_user
       flash[:alert] = "You do not have the permissions to do that"
       redirect_to @project
     end

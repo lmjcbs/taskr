@@ -1,10 +1,13 @@
+<h1>Project   |    <%= @project.title %></h1>
+<%= link_to "Back To Project Index", project_path(@project) %>
+<p><%= link_to "Click here", new_project_task_path %> to create a new task.</p>
 <% if @tasks.empty? %>
   <p>You don't have any tasks yet.</p>
-  <p><%= link_to "Click here", new_project_path %> to create one.</p>
-<% elsif @tasks.empty? %>
-  <p>Sorry, there are no matches for <%= params[:query] %></p>
 <% else %>
+  <p>Current Tasks: </p>
   <% @tasks.each do |task| %>
+  <div class="task">
     <%= link_to task.title, project_task_path(@project, task) %>
+  </div>
   <% end %>
 <% end %>

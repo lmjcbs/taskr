@@ -1,12 +1,11 @@
 class ProjectsController < ApplicationController
-  before_action :set_user
+  before_action :authenticate_user!
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-  before_action :set_project_tasks, only: :show
-  before_action :project_member?, only: [:show]
-  before_action :project_manager?, only: [:edit, :update, :destroy]
+  before_action :authenticate_project_member, only: [:show]
+  before_action :authenticate_project_manager, only: [:edit, :update, :destroy]
 
   def index
-    @projects = @user.projects   
+    @projects = current_user.projects
   end
   
   def new
@@ -15,12 +14,11 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
-    @project.add_project_manager(@user)
+    @project.define_project_manager(current_user)
     if @project.save
       flash[:notice] = "Project successfully created"
       redirect_to @project
     else
-      flash[:alert] = "Something went wrong"
       render 'new'
     end
   end
@@ -36,17 +34,16 @@ class ProjectsController < ApplicationController
       flash[:notice] = "Project successfully updated"
       redirect_to @project
     else
-      flash[:alert] = "Something went wrong"
       render 'edit'
     end
   end
 
   def destroy
     if @project.destroy
-      flash[:notice] = "Project was successfully deleted."
-      redirect_to home_path
+      flash[:notice] = "Project was successfully deleted"
+      redirect_to projects_path
     else
-      flash[:alert] = "Something went wrong"
+      flash[:alert] = "Unable to delete project"
       redirect_to @project
     end
   end
@@ -61,19 +58,15 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
   end
 
-  def set_project_tasks
-    @tasks = @project.tasks
-  end
-
-  def project_member?
-    unless @project.users.include?(@user)
+  def authenticate_project_member
+    unless @project.users.include?(current_user)
       flash[:alert] = "You do not have the permissions to view that"
-      redirect_to home_path
+      redirect_to projects_path
     end
   end
 
-  def project_manager?
-    unless @project.project_manager == @user
+  def authenticate_project_manager
+    unless @project.project_manager == current_user
       flash[:alert] = "You do not have the permissions to do that"
       redirect_to @project
     end

@@ -1,9 +1,15 @@
 <h1>Project Task Info</h1>
 
-<%= render partial: 'task', locals: {task: @task} %>
-
 <% if @task.user == @user %>
   <%= link_to 'Edit', edit_project_task_path(@project, @task) %> |
-  <%= link_to 'Destroy ', [@project, @task], method: :delete, data: { confirm: 'Are you sure?' } %>
+  <%= link_to 'Destroy ', [@project, @task], method: :delete, data: { confirm: 'Are you sure?' } %> |
 <% end %>
 <%= link_to 'Back', project_tasks_path(@project) %>
+
+<%= render partial: 'task', locals: {task: @task, user: @user} %>
+
+<%= render partial: 'comments/new' %>
+
+<% if @task.has_comments %>
+  <% display_comments(@task) %>
+<% end %>

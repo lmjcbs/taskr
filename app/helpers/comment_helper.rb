@@ -1,6 +1,6 @@
 module CommentHelper
   def has_comments(resource)
-    !resource.comments.empty?
+    !!resource.comments
   end
 
   def display_comments(resource)

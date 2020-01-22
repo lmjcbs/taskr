@@ -1,3 +1,4 @@
+<%= render partial: 'errors/errors', locals: {project: project} %>
 <%= form_for project do |f| %>
   <%= f.label :title %>
   <%= f.text_field :title %><br>

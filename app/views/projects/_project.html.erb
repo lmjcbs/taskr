@@ -1,6 +1,9 @@
-<h2>Welcome to <%= project.title %> project.<h2>
-<h2>There are currently <%= project.users.count %> project members.</h2>
-<h2>There are currently <%= project.tasks.count %> tasks in this project.</h2>
-<% if project.tasks.count == 0 %>
-  <p><%= link_to "Click Here", new_project_task_path(project) %> to create a new task.</p>
+<h3><%= project.title %><h3>
+<% if project.project_manager == current_user %>
+  <%= link_to 'Edit', edit_project_path(project) %> |
+  <%= link_to 'Destroy', project , method: :delete, data: { confirm: 'Are you sure?' } %> |
 <% end %>
+<h4>There are currently <%= project.users.count %> project members.</h4>
+<h4>There are currently <%= project.tasks.count %> tasks in this project.</h4>
+<p><%= link_to "Click Here", new_project_task_path(project) %> to create a new task.</p>
+<hr>

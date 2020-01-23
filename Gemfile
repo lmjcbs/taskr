@@ -26,7 +26,7 @@ gem 'devise'
 # Use omniauth github strategy
 gem 'omniauth-github'
 # Added omniauth security
-gem 'omniauth-rails_csrf_protection', '~> 0.1'
+# gem 'omniauth-rails_csrf_protection', '~> 0.1'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

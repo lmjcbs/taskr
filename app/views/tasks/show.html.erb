@@ -10,6 +10,6 @@
 
 <%= render partial: 'comments/new' %>
 
-<% if @task.has_comments %>
+<% if has_comments(@task) %>
   <% display_comments(@task) %>
 <% end %>

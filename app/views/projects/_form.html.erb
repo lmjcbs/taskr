@@ -1,7 +1,9 @@
-<%= render partial: 'errors/errors', locals: {project: project} %>
+<%= render partial: 'errors/errors', locals: {resource: project} %>
 <%= form_for project do |f| %>
   <%= f.label :title %>
   <%= f.text_field :title %><br>
 
+  <%= label_tag "Add a project Member by username" %>
+  <%= text_field_tag (:project_member) %><br />
   <%= f.submit %>
 <% end %>

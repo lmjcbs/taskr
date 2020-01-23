@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
   :recoverable, :rememberable, :validatable,
-  :omniauthable
+  :omniauthable, omniauth_providers: [:github]
+
   has_many :project_members
   has_many :projects, through: :project_members
   has_many :tasks, through: :projects

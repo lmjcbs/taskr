@@ -15,6 +15,9 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.define_project_manager(current_user)
+    if user = User.find_by(username: params[:project_member])
+      @project.add_project_member(user)
+    end
     if @project.save
       flash[:notice] = "Project successfully created"
       redirect_to @project
@@ -30,6 +33,9 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    if user = User.find_by(username: params[:project_member])
+      @project.add_project_member(user)
+    end
     if @project.update(project_params)
       flash[:notice] = "Project successfully updated"
       redirect_to @project

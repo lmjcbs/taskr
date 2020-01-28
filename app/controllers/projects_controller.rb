@@ -5,18 +5,23 @@ class ProjectsController < ApplicationController
   before_action :authenticate_project_manager, only: [:edit, :update, :destroy]
 
   def index
-    @projects = current_user.projects
+    if params[:q]
+      @projects = Project.search(params[:q], current_user)
+    else
+      @projects = current_user.projects
+    end
   end
   
   def new
     @project = Project.new
+    
   end
 
   def create
     @project = Project.new(project_params)
     @project.define_project_manager(current_user)
-    if user = User.find_by(username: params[:project_member])
-      @project.add_project_member(user)
+    if user = User.find_by(username: params[:username])
+      @project.add_project_member(user, params[:role])
     end
     if @project.save
       flash[:notice] = "Project successfully created"

@@ -3,7 +3,9 @@
   <%= f.label :title %>
   <%= f.text_field :title %><br>
 
-  <%= label_tag "Add a project Member by username" %>
-  <%= text_field_tag (:project_member) %><br />
+  <h5>Add User to the project</h5>
+  Username  :<%= text_field_tag :username %><br>
+  Role   :<%= text_field_tag :role %><br>
+
   <%= f.submit %>
 <% end %>

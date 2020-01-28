@@ -3,12 +3,12 @@
 <h3><%= link_to "Click here", new_project_path %> to create a new project.</h3>
 
 <hr>
-
+<p>Search for project's you've created</p>
 <%= form_tag( '/projects', method: 'GET') do %>
   <%= text_field_tag (:q) %>
   <%= submit_tag  "search", name: nil %>
 <% end %>
-
+<hr>
 <% if @projects.empty? %>
   <p>You don't have any projects yet.</p>
 <% else %>

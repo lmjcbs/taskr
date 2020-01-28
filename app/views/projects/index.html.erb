@@ -1,10 +1,11 @@
+<br>
 <h2><%= current_user.username %>'s projects</h2>
+<h3><%= link_to "Click here", new_project_path %> to create a new project.</h3>
+
 <hr>
+
 <% if @projects.empty? %>
   <p>You don't have any projects yet.</p>
-  <p><%= link_to "Click here", new_project_path %> to create one.</p>
-<% elsif @projects.empty? %>
-  <p>Sorry, there are no matches for <%= params[:query] %></p>
 <% else %>
   <% @projects.each do |project| %>
     <%= render partial: 'project', locals: {project: project} %>

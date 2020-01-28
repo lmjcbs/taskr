@@ -1,6 +1,6 @@
 <h1>Project Task Info</h1>
 
-<% if @task.user == @user %>
+<% if @task.user == current_user %>
   <%= link_to 'Edit', edit_project_task_path(@project, @task) %> |
   <%= link_to 'Destroy ', [@project, @task], method: :delete, data: { confirm: 'Are you sure?' } %> |
 <% end %>

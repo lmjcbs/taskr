@@ -1,5 +1,5 @@
 <h1>Project   |    <%= @project.title %></h1>
-<%= link_to "Back To Project Index", project_path(@project) %>
+<%= link_to "Back To Project", project_path(@project) %>
 <p><%= link_to "Click here", new_project_task_path %> to create a new task.</p>
 <% if @tasks.empty? %>
   <p>You don't have any tasks yet.</p>

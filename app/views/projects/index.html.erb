@@ -4,6 +4,11 @@
 
 <hr>
 
+<%= form_tag( '/projects', method: 'GET') do %>
+  <%= text_field_tag (:q) %>
+  <%= submit_tag  "search", name: nil %>
+<% end %>
+
 <% if @projects.empty? %>
   <p>You don't have any projects yet.</p>
 <% else %>

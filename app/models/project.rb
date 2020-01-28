@@ -4,8 +4,6 @@ class Project < ApplicationRecord
   has_many :tasks, dependent: :destroy
   has_many :comments, through: :tasks
 
-  accepts_nested_attributes_for :project_members
-
   validates :title, presence: :true
 
   #returns projects filtered by title and created by the current_user

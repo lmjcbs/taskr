@@ -4,7 +4,11 @@ class TasksController < ApplicationController
   before_action :user_created_task?, only: [:edit, :update, :destroy]
 
   def index
-    @tasks = @project.tasks
+    if params[:q]
+      @tasks = Task.search_by_title(params[:q])
+    else
+      @tasks = @project.tasks
+    end
   end
 
   def new

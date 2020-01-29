@@ -4,6 +4,12 @@
 <% if @tasks.empty? %>
   <p>You don't have any tasks yet.</p>
 <% else %>
+  
+  <%= form_tag("/projects/#{@project.id}/tasks", method: 'GET') do %>
+    <%= text_field_tag :q %>
+    <%= submit_tag "Search" %>
+  <% end %>
+
   <p>Current Tasks: </p>
   <% @tasks.each do |task| %>
   <div class="task">

@@ -6,4 +6,6 @@ class Task < ApplicationRecord
 
   validates :title, :due_date, presence: :true
   validates :description, length: { minimum: 15 }
+
+  scope :search_by_title, -> (search_term) {where("title LIKE ?", search_term)}
 end
